@@ -58,6 +58,10 @@ python legged_gym/scripts/train.py --task=xxx
 - `--sim_device`: 仿真计算设备，指定 CPU 为 `--sim_device=cpu`
 - `--rl_device`: 强化学习计算设备，指定 CPU 为 `--rl_device=cpu`
 
+#### 部分训练参数说明
+- `Value function loss`: 价值损失函数，优化对象为价值网络 (Critic)
+- `Surrogate loss`: 替代损失，优化对象为策略网络 (Actor)
+
 **默认保存训练结果**：`logs/<experiment_name>/<date_time>_<run_name>/model_<iteration>.pt`
 
 ---
@@ -161,3 +165,6 @@ python deploy/deploy_real/deploy_real.py {net_interface} {config_name}
 
 详情请阅读完整 [LICENSE 文件](./LICENSE)。
 
+# TODO
+
+- [ ] heading的意义

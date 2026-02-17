@@ -3,7 +3,15 @@ from .base_config import BaseConfig
 class LeggedRobotCfg(BaseConfig):
     class env:
         num_envs = 4096
-        num_observations = 48
+
+        # base_ang_vel: 3
+        # projected_gravity: 3
+        # commands: 3
+        # dof_pos: 12
+        # dof_vel: 12
+        # actions: 12
+        num_observations = 45
+
         num_privileged_obs = None # if not None a priviledge_obs_buf will be returned by step() (critic obs for assymetric training). None is returned otherwise 
         num_actions = 12
         env_spacing = 3.  # not used with heightfields/trimeshes 
@@ -12,11 +20,13 @@ class LeggedRobotCfg(BaseConfig):
         test = False
 
     class terrain:
-        mesh_type = 'plane' # "heightfield" # none, plane, heightfield or trimesh
+        mesh_type = 'trimesh' # "heightfield" # none, plane, heightfield or trimesh
         horizontal_scale = 0.1 # [m]
         vertical_scale = 0.005 # [m]
         border_size = 25 # [m]
-        curriculum = True
+        curriculum = True  # True only for heightfield and trimesh
+        if mesh_type == "plane":
+            curriculum = False
         static_friction = 1.0
         dynamic_friction = 1.0
         restitution = 0.
@@ -37,7 +47,7 @@ class LeggedRobotCfg(BaseConfig):
         slope_treshold = 0.75 # slopes above this threshold will be corrected to vertical surfaces
 
     class commands:
-        curriculum = False
+        curriculum = True
         max_curriculum = 1.
         num_commands = 4 # default: lin_vel_x, lin_vel_y, ang_vel_yaw, heading (in heading mode ang_vel_yaw is recomputed from heading error)
         resampling_time = 10. # time before command are changed[s]
